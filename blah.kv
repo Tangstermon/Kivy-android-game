@@ -1,0 +1,269 @@
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+<MyLabel@Label>:
+	font_name: 'AldotheApache'
+
+<HomeButton@Button>:
+	id: home
+	x:0
+	y:0
+	width: dp(50)
+	height:dp(50)
+	on_press:
+		app.root.current = 'title'
+
+	background_color: (1,0,0,0)
+	Image:
+		source: './home.png'
+		width: dp(50)
+		height:dp(50)			
+		allow_stretch: True
+
+<RestartButton@Button>:
+	id: restart
+	x: root.width - self.width
+	y: 0
+	width: dp(50)
+	height:dp(50)
+	background_color: (1,0,0,0)
+
+	Image:
+		source: './restart.png'
+		width: dp(50)
+		height:dp(50)
+		center_x: self.parent.center_x 
+		center_y: self.parent.center_y
+
+		allow_stretch: True
+
+ScreenManage:
+	transition: SlideTransition(duration=0.5)
+	id: manager
+	name: 'manager'
+	TitleScreen:
+		name: 'title'
+	MainGame:
+		id: game
+		name: 'main'
+	HowToPlay:
+		name: 'how'
+	SecondGame:
+		id: second
+		name: 'secGame'
+
+<TitleScreen@Screen>:
+	TitleGui:
+		id: tg
+		Button:
+			x: (root.width/3) - self.width/2
+			center_y: root.height/3
+			background_color: (0,0,1,1)
+			width: dp(50)
+			height: dp(50)
+			on_press: 
+				self.background_color = (0,0,.9,1)
+			on_release: 
+				app.root.current = 'main'
+				app.root.transition.direction = 'down'
+				self.background_color = (0,0,1,1)
+			Image:
+				source: './play.png'
+				keep_ratio: False
+				allow_stretch: True
+				width: dp(50)
+				height: dp(50)
+				center_x: self.parent.center_x
+	    		center_y: self.parent.center_y
+				
+
+		Button:
+			x: (root.width/3)*2 - self.width/2
+			center_y: root.height/3
+			width: dp(50)
+			height: dp(50)
+			background_color: (255,0,0,1)
+			on_press: 
+				self.background_color = (0.99,0,0,1)
+			on_release:
+				app.root.current = 'how'
+				app.root.transition.direction = 'left'
+				self.background_color = (255,0,0,1)
+			Image:
+				allow_stretch: True
+				keep_ratio: False
+				width: dp(50)
+				height: dp(50)
+				source: './question.png'
+				center_x: self.parent.center_x
+	    		center_y: self.parent.center_y
+	    
+	    
+	    Button:
+			x: (root.width/2)
+			center_y: root.height/3
+			width: dp(50)
+			height: dp(50)
+			background_color: (255,0,0,1)
+			on_press: 
+				self.background_color = (0.99,0,0,1)
+			on_release:
+				app.root.current = 'secGame'
+				app.root.transition.direction = 'up'
+				self.background_color = (255,0,0,1)
+			Image:
+				allow_stretch: True
+				keep_ratio: False
+				width: dp(50)
+				height: dp(50)
+				source: './shape.png'
+				center_x: self.parent.center_x
+	    		center_y: self.parent.center_y
+	    
+	    
+	    ToggleButton:
+	    	id: soundB
+			x: (root.width/2)
+			center_y: root.height/5
+			width: dp(50)
+			height: dp(50)
+			background_color: (255,0,0,1)
+			on_press: 
+				self.background_color = (0.99,0,0,1)
+				
+			on_state: tg.playMusic(self.state)
+			Image:
+				allow_stretch: True
+				keep_ratio: False
+				width: dp(50)
+				height: dp(50)
+				source: './sound.png'
+				center_x: self.parent.center_x
+	    		center_y: self.parent.center_y
+					
+				
+		Label:
+			id: gameTitle
+			markup: True
+			text: 'C[color=#ff0000]o[/color]lor [color=#FFFF00]M[/color]atc[color=#00FF00]h[/color]' 
+			center_x: root.width/2 
+			y:(root.height/3)*2
+			font_size: '50sp'
+			font_name: 'AldotheApache'
+
+<HowToPlay@Screen>:
+	
+	Image:
+		source:'howtoplay.png'
+		keep_ratio: False
+		allow_stretch: True
+		x: 0
+		y: root.height/6
+		size_hint:(1,0.75)
+			
+	Button:
+		x: root.width - self.width
+		y: 0
+		size_hint: (0.15,0.15)
+		background_color: (1,0,0,0)
+		on_press: 
+			app.root.current = 'title'
+			app.root.transition.direction = 'right'
+		Image:
+			source: './question.png'
+			center_x: self.parent.center_x
+    		center_y: self.parent.center_y
+			allow_stretch: True
+
+
+
+<MainGame@Screen>:
+	GUI:
+		id: gui
+
+		MyLabel:
+			id: a
+			text: 'Score: ' +  str(root.width)
+			center_x: 0 + self.parent.width/4
+			center_y: (root.top) -self.height*2
+			font_size: '30sp'
+			font_name: 'AldotheApache'
+
+		Image:
+			id: arrow
+			source: self.parent.arrow_down
+			center_x: root.width/2
+			center_y: (root.height/4)*3
+			width: dp(50)
+			height:dp(50)
+			
+		RestartButton:
+			id: restart
+			x: root.width - self.width
+			y: 0
+			width: dp(50)
+			height:dp(50)
+			background_color: (1,0,0,0)
+
+			Image:
+				source: './restart.png'
+				width: dp(50)
+				height:dp(50)
+				center_x: self.parent.center_x 
+				center_y: self.parent.center_y
+				allow_stretch: True
+
+		HomeButton:
+			id: home
+				
+		MyLabel:
+			id: countdown
+			text: str(self.parent.countdownLimit)
+			center_x: (root.width/4)*3
+			center_y: (root.top) -self.height*2
+			font_size: '30sp'
+
+
+<SecondGame@Screen>:
+	ShapeGame:
+
+		MyLabel:
+			id: a
+			text: 'Score: ' +  str(root.width)
+			center_x: 0 + self.parent.width/4
+			center_y: (root.top) -self.height*2
+			font_size: '30sp'
+			font_name: 'AldotheApache'
+
+		Image:
+			id: arrow
+			source: self.parent.arrow_down
+			center_x: root.width/2
+			center_y: (root.height/4)*3
+			width: dp(50)
+			height:dp(50)
+			
+		RestartButton:
+			id: restart
+			x: root.width - self.width
+			y: 0
+			width: dp(50)
+			height:dp(50)
+			background_color: (1,0,0,0)
+
+			Image:
+				source: './restart.png'
+				width: dp(50)
+				height:dp(50)
+				center_x: self.parent.center_x 
+				center_y: self.parent.center_y
+				allow_stretch: True
+
+		HomeButton:
+			id: home
+				
+		MyLabel:
+			id: countdown
+			text: str(self.parent.countdownLimit)
+			center_x: (root.width/4)*3
+			center_y: (root.top) -self.height*2
+			font_size: '30sp'
